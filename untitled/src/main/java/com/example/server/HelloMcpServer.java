@@ -2,6 +2,7 @@ package com.example.server;
 
 import com.example.tools.CalculatorTool;
 import com.example.tools.HelloTool;
+import com.example.tools.MathTool;
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
@@ -78,6 +79,7 @@ public class HelloMcpServer {
                 .build();
         server.addTool(HelloTool.create());
         server.addTool(CalculatorTool.create());
+        server.addTool(MathTool.create());
         Thread.currentThread().join();
     }
 }
