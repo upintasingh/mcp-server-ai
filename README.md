@@ -1,161 +1,215 @@
-# Java MCP Hello Server
+# MCP Server AI (Java)
 
-A simple MCP (Model Context Protocol) server built using the official Java MCP SDK.
+A hands-on Java implementation of a Model Context Protocol (MCP) Server built using the MCP Java SDK.
 
-This project demonstrates how to:
+This project was created to learn MCP concepts from the ground up, starting with simple tools and gradually adding resources, resource templates, and prompts.
 
-* Create an MCP server using Java 21
-* Register custom tools
-* Expose tools over STDIO transport
-* Test tools using the MCP Inspector
-* Return responses from tool handlers
+## Features
 
-## Prerequisites
+### Tools
 
-* Java 21+
-* Maven 3.9+
-* Node.js (for MCP Inspector)
+#### Hello Tool
 
-## Dependencies
+Greets a user by name.
 
-* MCP Java SDK 1.0.0
-* Jackson
-* SLF4J Simple Logger
+Example Input:
+
+```json
+{
+  "name": "Upinta"
+}
+```
+
+Example Output:
+
+```text
+Hello, Upinta! Greetings from your Java MCP server!
+```
+
+---
+
+#### Math Tool
+
+Supports the following operations:
+
+* add
+* subtract
+* multiply
+* divide
+
+Example Input:
+
+```json
+{
+  "a": 10,
+  "b": 5,
+  "operation": "multiply"
+}
+```
+
+Example Output:
+
+```text
+Result of multiply 10.00 and 5.00 = 50.00
+```
+
+Includes MCP-compliant error handling using `isError=true`.
+
+---
+
+### Resources
+
+#### server://info
+
+Returns information about the MCP server.
+
+Example Response:
+
+```json
+{
+  "serverName": "hello-server",
+  "version": "1.0.0",
+  "tools": [
+    "hello",
+    "math"
+  ]
+}
+```
+
+---
+
+### Resource Templates
+
+#### project://{projectName}
+
+Dynamic resource template that returns project information.
+
+Example:
+
+```text
+project://order-service
+```
+
+Response:
+
+```json
+{
+  "project": "order-service",
+  "status": "active",
+  "owner": "upinta"
+}
+```
+
+---
+
+### Prompts
+
+#### greet-user
+
+Generates a reusable prompt template.
+
+Example Input:
+
+```json
+{
+  "name": "Upinta"
+}
+```
+
+Example Prompt:
+
+```text
+You are a friendly AI assistant.
+
+Greet Upinta warmly and ask how their MCP learning journey is going.
+
+Keep the response short and encouraging.
+```
 
 ## Project Structure
 
 ```text
-src/
-└── main/
-    └── java/
-        └── com/example/
-            └── HelloMcpServer.java
+src/main/java
+├── server
+│   └── HelloMcpServer.java
+│
+├── tools
+│   ├── HelloTool.java
+│   ├── CalculatorTool.java
+│   └── MathTool.java
+│
+├── resources
+│   ├── ServerInfoResource.java
+│   └── ProjectResourceTemplate.java
+│
+└── prompts
+    └── GreetUserPrompt.java
 ```
 
-## Build
-
-```bash
-mvn clean package
-```
-
-The build generates:
-
-```text
-target/mcp-hello.jar
-```
-
-## Run
-
-```bash
-java -jar target/mcp-hello.jar
-```
-
-When the server starts, it publishes MCP notifications and waits for client requests over STDIO.
-
-## Available Tool
-
-### say Hello
-
-Greets a user by name.
-
-#### Input
-
-```json
-{
-  "name": "Upinta"
-}
-```
-
-#### Output
-
-```text
-Hello, Upinta! Greetings from your Java MCP server!
-```
-
-## Testing with MCP Inspector
-
-Start MCP Inspector:
-
-```bash
-npx @modelcontextprotocol/inspector
-```
-
-Configure:
-
-### Transport
-
-```text
-STDIO
-```
-
-### Command
-
-```text
-java
-```
-
-### Arguments
-
-```text
--jar E:/mcp/untitled/target/mcp-hello.jar
-```
-
-Connect to the server.
-
-Navigate to:
-
-```text
-Tools → say Hello
-```
-
-Provide input:
-
-```json
-{
-  "name": "Upinta"
-}
-```
-
-Expected response:
-
-```text
-Hello, Upinta! Greetings from your Java MCP server!
-```
-
-## Technologies Used
+## Technologies
 
 * Java 21
 * Maven
 * MCP Java SDK 1.0.0
 * Jackson
 * SLF4J
+
+## Running the Server
+
+Build:
+
+```bash
+mvn clean package
+```
+
+Run:
+
+```bash
+java -jar target/mcp-hello.jar
+```
+
+## Testing with MCP Inspector
+
+Launch Inspector:
+
+```bash
+npx @modelcontextprotocol/inspector -- java -jar target/mcp-hello.jar
+```
+
+Open:
+
+```text
+http://localhost:6274
+```
+
+Test:
+
+* Tools
+* Resources
+* Resource Templates
+* Prompts
+
+## MCP Concepts Covered
+
+* MCP Server Setup
+* Tool Registration
+* Tool Execution
+* Input Schemas
+* Error Handling
+* Resources
+* Resource Templates
+* Prompts
 * MCP Inspector
 
-## Learning Goals
+## Next Steps
 
-This project serves as a starting point for learning:
+* External API Integration (Weather Tool)
+* GitHub Tool
+* MCP Client Development
+* Async Tools
+* Sampling
+* Production-grade MCP Server Architecture
 
-* MCP Tools
-* MCP Client/Server communication
-* JSON Schema-based tool definitions
-* STDIO transport
-* MCP Inspector
+## Author
 
-## Future Enhancements
-
-* Calculator Tool
-* Weather Tool
-* Spring Boot Integration
-* MCP Resources
-* MCP Prompts
-* External API Integration
-
-## References
-
-* Model Context Protocol (MCP)
-* MCP Java SDK
-* MCP Inspector
-
-## License
-
-MIT License
+Upinta Singh
