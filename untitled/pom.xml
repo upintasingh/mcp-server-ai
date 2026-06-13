@@ -45,7 +45,7 @@
                             <finalName>mcp-hello</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.example.HelloMcpServer</mainClass>
+                                    <mainClass>com.example.server.HelloMcpServer</mainClass>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             </transformers>

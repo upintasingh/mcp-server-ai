@@ -1,18 +1,17 @@
-package com.example;
+package com.example.server;
 
+import com.example.tools.CalculatorTool;
+import com.example.tools.HelloTool;
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
-import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.transport.StdioServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
 import tools.jackson.databind.json.JsonMapper;
 
-import java.util.List;
-import java.util.Map;
 
 public class HelloMcpServer {
-    public static void main(String[] args) throws InterruptedException {
+    /*public static void main(String[] args) throws InterruptedException {
         McpSchema.JsonSchema inputSchema = new McpSchema.JsonSchema("object",
                 Map.of("name", Map.of(
                         "type",        "string",
@@ -64,5 +63,21 @@ public class HelloMcpServer {
         Thread.currentThread().join();
 
 
+    }*/
+    public static void main(String[] args) throws InterruptedException {
+        var jsonMapper        = new JacksonMcpJsonMapper(JsonMapper.builder().build());
+        var transportProvider = new StdioServerTransportProvider(jsonMapper);
+
+        McpSyncServer server = McpServer.sync(transportProvider)
+                .serverInfo("hello-server", "1.0.0")
+                .capabilities(
+                        McpSchema.ServerCapabilities.builder()
+                                .tools(true)
+                                .build()
+                )
+                .build();
+        server.addTool(HelloTool.create());
+        server.addTool(CalculatorTool.create());
+        Thread.currentThread().join();
     }
 }
