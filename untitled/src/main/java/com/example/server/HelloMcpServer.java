@@ -1,5 +1,8 @@
 package com.example.server;
 
+import com.example.prompts.GreetUserPrompt;
+import com.example.resources.ProjectResourceTemplate;
+import com.example.resources.ServerInfoResource;
 import com.example.tools.CalculatorTool;
 import com.example.tools.HelloTool;
 import com.example.tools.MathTool;
@@ -74,12 +77,17 @@ public class HelloMcpServer {
                 .capabilities(
                         McpSchema.ServerCapabilities.builder()
                                 .tools(true)
+                                .resources(true, true)
+                                .prompts(true)
                                 .build()
                 )
                 .build();
         server.addTool(HelloTool.create());
         server.addTool(CalculatorTool.create());
         server.addTool(MathTool.create());
+        server.addResource(ServerInfoResource.create());
+        server.addResourceTemplate(ProjectResourceTemplate.create());
+        server.addPrompt(GreetUserPrompt.create());
         Thread.currentThread().join();
     }
 }
