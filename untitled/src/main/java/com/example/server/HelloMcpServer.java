@@ -6,6 +6,7 @@ import com.example.resources.ServerInfoResource;
 import com.example.tools.CalculatorTool;
 import com.example.tools.HelloTool;
 import com.example.tools.MathTool;
+import com.example.tools.WeatherTool;
 import io.modelcontextprotocol.json.jackson3.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpSyncServer;
@@ -68,7 +69,7 @@ public class HelloMcpServer {
 
 
     }*/
-    public static void main(String[] args) throws InterruptedException {
+    /*public static void main(String[] args) throws InterruptedException {
         var jsonMapper        = new JacksonMcpJsonMapper(JsonMapper.builder().build());
         var transportProvider = new StdioServerTransportProvider(jsonMapper);
 
@@ -85,9 +86,10 @@ public class HelloMcpServer {
         server.addTool(HelloTool.create());
         server.addTool(CalculatorTool.create());
         server.addTool(MathTool.create());
+        server.addTool(WeatherTool.create());
         server.addResource(ServerInfoResource.create());
         server.addResourceTemplate(ProjectResourceTemplate.create());
         server.addPrompt(GreetUserPrompt.create());
         Thread.currentThread().join();
-    }
+    }*/
 }
